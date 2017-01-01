@@ -28,29 +28,29 @@ public class Weka {
 		trainDataSet.setClassIndex(trainDataSet.numAttributes() - 1);
 
 		// Creating bayes classifier!
-//		NaiveBayesMultinomial bayes = new NaiveBayesMultinomial();
-//		bayes.buildClassifier(trainDataSet);
-//
-//		Evaluation eval = new Evaluation(trainDataSet);
+		NaiveBayesMultinomial bayes = new NaiveBayesMultinomial();
+		bayes.buildClassifier(trainDataSet);
+
+		Evaluation eval = new Evaluation(trainDataSet);
 
 //		//Building Stacking model
-		Stacking stacker = new Stacking();
-		stacker.setMetaClassifier(new NaiveBayesMultinomial());
-		Classifier[] classifiers ={
-				new NaiveBayesMultinomial(),
-				new RandomForest(),
-				new DecisionStump(),
-				new NaiveBayes(),
-				new JRip(),
-				new HoeffdingTree()
-				
-				
-				
-		};
-		stacker.setClassifiers(classifiers);
-		stacker.buildClassifier(trainDataSet);
-//		
-		Evaluation eval = new Evaluation(trainDataSet);
+//		Stacking stacker = new Stacking();
+//		stacker.setMetaClassifier(new NaiveBayesMultinomial());
+//		Classifier[] classifiers ={
+//				new NaiveBayesMultinomial(),
+//				new RandomForest(),
+//				new DecisionStump(),
+//				new NaiveBayes(),
+//				new JRip(),
+//				new HoeffdingTree()
+//				
+//				
+//				
+//		};
+//		stacker.setClassifiers(classifiers);
+//		stacker.buildClassifier(trainDataSet);
+////		
+//		Evaluation eval = new Evaluation(trainDataSet);
 		
 //		//Building Bagging model
 //		Bagging bagger = new Bagging();
@@ -73,7 +73,7 @@ public class Weka {
 		// Set class index to the last attribute
 		testDataSet.setClassIndex(testDataSet.numAttributes() - 1);
 		// Now evaluate model.
-		eval.evaluateModel(stacker, testDataSet);
+		eval.evaluateModel(bayes, testDataSet);
 
 		System.out.println(eval.toSummaryString("Evaluation results:\n", false));
 		//
@@ -109,7 +109,7 @@ public class Weka {
 			Instance newInst = testDataSet.instance(i);
 			// Call classifyInstance, which returns a double value for the
 			// class.
-			double predJ48 = stacker.classifyInstance(newInst);
+			double predJ48 = bayes.classifyInstance(newInst);
 			// Use this value to get string value of the predicted class.
 			String predString = testDataSet.classAttribute().value((int) predJ48);
 			System.out.println(actual + ", " + predString);
